@@ -1,0 +1,23 @@
+version: '3.2'
+
+services:
+
+    media-server:
+        build: ./server
+        restart: always
+        container_name: media-dataserver
+        working_dir: /usr/src/app
+        volumes:
+            - ./media:/usr/src/app/media
+        ports:
+            - "8555:3000"
+
+    file-server:
+        image: nginx:latest
+        restart: always
+        container_name: media-fileserver
+        volumes: 
+            - ./media/public:/usr/share/nginx/html
+        ports:
+            - 8666:80
+    

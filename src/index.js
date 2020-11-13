@@ -6,11 +6,13 @@ const cors = require('kcors')
 const config = require('config')
 const url = require('url')
 const app = new Koa()
+const { cargo } = require('koatools')
 const router = require('koa-router')()
 
 /* MIDDLEWARE */
 app.use(bodyparser())
 app.use(cors())
+app.use(cargo())
 
 const libi = require('libi')({
     homedir: p.resolve(config.directory.home),
@@ -19,32 +21,47 @@ const libi = require('libi')({
 
 router.get('/movies', async (ctx) => {
     const lib = libi('movies')
-    ctx.body = await lib.graph()
+    const graph = await lib.graph()
+    if(graph) graph.forEach(s => delete s['videos'] && delete s['subtitles'])
+    ctx.body = ctx.cargo.setPayload(graph || [])
 })
 
 router.get('/movies-import', async (ctx) => {
     const lib = libi('movies')
-    ctx.body = await lib.import()
+    await lib.import()
+    ctx.body = ctx.cargo.setDetail('custom', 'movie-import complete!', 'success')
 })
 
 router.get('/movies-graph', async (ctx) => {
     const lib = libi('movies')
-    ctx.body = await lib.updateGraph()
+    await lib.updateGraph()
+    ctx.body = ctx.cargo.setDetail('updated', 'movies-graph', 'success')
 })
 
 router.get('/shows', async (ctx) => {
     const lib = libi('shows')
-    ctx.body = await lib.graph()
+    const graph = await lib.graph()
+    graph.forEach(s => delete s['seasons'])
+    ctx.body = ctx.cargo.setPayload(graph || [])
+})
+
+router.get('/shows/:id', async (ctx) => {
+    const { id } = ctx.params
+    const lib = libi('shows')
+    const graph = await lib.graph()
+    ctx.body = ctx.cargo.setPayload(graph.find(m => m.id == id) || null)
 })
 
 router.get('/shows-import', async (ctx) => {
     const lib = libi('shows')
-    ctx.body = await lib.import()
+    await lib.import()
+    ctx.body = ctx.cargo.setDetail('custom', 'shows-import complete!', 'success')
 })
 
 router.get('/shows-graph', async (ctx) => {
     const lib = libi('shows')
-    ctx.body = await lib.updateGraph()
+    await lib.updateGraph()
+    ctx.body = ctx.cargo.setDetail('updated', 'shows-graph', 'success')
 })
 
 /* ROUTES */
