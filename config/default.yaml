@@ -4,8 +4,8 @@ server:
    port: 3000
 
 directory:
-  home: /Users/davidchen/Desktop/media
-  
+  home: media
+
 api:
   baseURL: http://aox.hopto.org:8000
 

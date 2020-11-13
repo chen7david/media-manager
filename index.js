@@ -19,7 +19,7 @@ const libi = require('libi')({
 
 router.get('/movies', async (ctx) => {
     const lib = libi('movies')
-    ctx.body = lib
+    ctx.body = await lib.graph()
 })
 
 router.get('/movies-import', async (ctx) => {
@@ -29,18 +29,12 @@ router.get('/movies-import', async (ctx) => {
 
 router.get('/movies-graph', async (ctx) => {
     const lib = libi('movies')
-    ctx.body = await lib.graph()
-})
-
-router.get('/movies-graphup', async (ctx) => {
-    const lib = libi('movies')
     ctx.body = await lib.updateGraph()
 })
 
-
 router.get('/shows', async (ctx) => {
     const lib = libi('shows')
-    ctx.body = lib
+    ctx.body = await lib.graph()
 })
 
 router.get('/shows-import', async (ctx) => {
@@ -50,14 +44,8 @@ router.get('/shows-import', async (ctx) => {
 
 router.get('/shows-graph', async (ctx) => {
     const lib = libi('shows')
-    ctx.body = await lib.graph()
-})
-
-router.get('/shows-graphup', async (ctx) => {
-    const lib = libi('shows')
     ctx.body = await lib.updateGraph()
 })
-
 
 /* ROUTES */
 app.use(router.routes())
