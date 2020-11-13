@@ -1,0 +1,31 @@
+{
+  "name": "media-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chen7david/media-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chen7david/media-manager/issues"
+  },
+  "homepage": "https://github.com/chen7david/media-manager#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "config": "^3.3.2",
+    "js-yaml": "^3.14.0",
+    "kcors": "^2.2.2",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^10.0.0",
+    "libi": "0.0.2",
+    "lodash": "^4.17.20"
+  }
+}

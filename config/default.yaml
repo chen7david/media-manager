@@ -1,0 +1,11 @@
+server:
+   protocol: 'http'
+   hostname: 'localhost'
+   port: 3000
+
+directory:
+  home: /Users/davidchen/Desktop/media
+  
+api:
+  baseURL: http://aox.hopto.org:8000
+
