@@ -26,6 +26,13 @@ router.get('/movies', async (ctx) => {
     ctx.body = ctx.cargo.setPayload(graph || [])
 })
 
+router.get('/movies/:id', async (ctx) => {
+    const { id } = ctx.params
+    const lib = libi('movies')
+    const graph = await lib.graph()
+    ctx.body = ctx.cargo.setPayload(graph.find(m => m.id == id) || null)
+})
+
 router.get('/movies-import', async (ctx) => {
     const lib = libi('movies')
     await lib.import()
@@ -49,7 +56,7 @@ router.get('/shows/:id', async (ctx) => {
     const { id } = ctx.params
     const lib = libi('shows')
     const graph = await lib.graph()
-    ctx.body = ctx.cargo.setPayload(graph.find(m => m.id == id) || null)
+    ctx.body = ctx.cargo.setPayload(graph.find(s => s.id == id) || null)
 })
 
 router.get('/shows-import', async (ctx) => {
