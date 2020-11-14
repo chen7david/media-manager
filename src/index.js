@@ -16,7 +16,10 @@ app.use(cargo())
 
 const libi = require('libi')({
     homedir: p.resolve(config.directory.home),
-    agent: require('meta-agent')(config.api)
+    agent: require('meta-agent')(config.api),
+    scandir: {
+        exclude: [/(^|\/)\.[^\/\.]/g, /@eaDir/g]
+    }
 })
 
 router.get('/movies', async (ctx) => {
